@@ -17,11 +17,11 @@ except ImportError:
     print('Warning: YAML must be installed to read input file.')
     raise
 
-from pyked.chemked import ChemKED, DataPoint
+from pyked.chemked import ChemKED, IgnitionDataPoint  
 
 # Local imports
 from .utils import units
-from .simulation import Simulation
+from .autoignition_simulation import AutoIgnitionSimulation as Simulation
 
 min_deviation = 0.10
 """float: minimum allowable standard deviation for experimental data"""
@@ -40,7 +40,7 @@ def create_simulations(dataset, properties):
     Returns
     -------
     simulations : list
-        List of :class:`Simulation` objects for each simulation
+        List of :class:`AutoignitionSimulation` objects for each simulation
 
     """
 
@@ -65,13 +65,13 @@ def simulation_worker(sim_tuple):
     Parameters
     ----------
     sim_tuple : tuple
-        Contains Simulation object and other parameters needed to setup
+        Contains AutoignitionSimulation object and other parameters needed to setup
         and run case.
 
     Returns
     -------
-    sim : ``Simulation``
-        Simulation case with calculated ignition delay.
+    sim : ``AutoignitionSimulation``
+        AutoignitionSimulation case with calculated ignition delay.
 
     """
     sim, model_file, model_spec_key, path, restart = sim_tuple
@@ -143,8 +143,8 @@ def get_changing_variable(cases):
 
     Parameters
     ----------
-    cases : list(pyked.chemked.DataPoint)
-        List of DataPoint with experimental case data.
+    cases : list(pyked.chemked.IgnitionDataPoint)
+        List of IgnitionDataPoint with experimental case data.
 
     Returns
     -------
